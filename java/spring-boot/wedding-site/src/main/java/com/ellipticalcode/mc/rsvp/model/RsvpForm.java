@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 /**
@@ -11,34 +12,42 @@ import javax.validation.constraints.Size;
  */
 public class RsvpForm {
 
-    private boolean isAttending;
+    private String isAttending;
 
-    private int totalInvitedGuests;
+    @Pattern(regexp = "[0-9]+", message = "Select how many will be invited.")
+    private String totalInvitedGuests;
 
-    @NotEmpty(message = "Please enter your full name.")
-    @NotNull(message = "Please enter your full name.")
-    @Size(max=100, message = "Full name is too long. It must be 100 characters or less.")
+    @NotEmpty(message = "Enter your full name.")
+    @NotNull(message = "Enter your full name.")
+    @Size(max=100, message = "Full name must be 100 characters or less.")
     private String name;
 
-    @NotEmpty(message = "Please enter your email.")
-    @NotNull(message = "Please enter your email.")
+    @NotEmpty(message = "Enter your email.")
+    @NotNull(message = "Enter your email.")
     @Size(max=100, message="Email must be 100 characters or less.")
     @Email(message = "Please enter a valid email.")
     private String email;
 
-    public boolean getIsAttending() {
+    //******************** PROPERTIES ********************
+
+    public RsvpForm() {
+        isAttending = "";
+        totalInvitedGuests = "";
+    }
+
+    public String getIsAttending() {
         return isAttending;
     }
 
-    public void setAttending(boolean attending) {
-        isAttending = attending;
+    public void setIsAttending(String isAttending) {
+        this.isAttending = isAttending;
     }
 
-    public int getTotalInvitedGuests() {
+    public String getTotalInvitedGuests() {
         return totalInvitedGuests;
     }
 
-    public void setTotalInvitedGuests(int totalInvitedGuests) {
+    public void setTotalInvitedGuests(String totalInvitedGuests) {
         this.totalInvitedGuests = totalInvitedGuests;
     }
 

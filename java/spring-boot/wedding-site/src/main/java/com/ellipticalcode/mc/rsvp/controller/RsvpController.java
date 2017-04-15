@@ -27,10 +27,12 @@ public class RsvpController {
     }
 
     @RequestMapping(value="/rsvp", method= RequestMethod.POST)
-    public String postRsvp(BindingResult bindingResult, @Valid RsvpForm rsvpForm, Model model) {
+    public String postRsvp(@Valid RsvpForm rsvpForm, BindingResult bindingResult, Model model) {
 
         if(bindingResult.hasErrors()) {
             model.addAttribute("showRsvp", true);
+            model.addAttribute("rsvpOptions", new RsvpOptions());
+            model.addAttribute("rsvpForm", rsvpForm);
             return "home/index";
         }
 

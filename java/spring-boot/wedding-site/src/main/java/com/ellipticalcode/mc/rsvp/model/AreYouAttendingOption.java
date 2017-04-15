@@ -4,20 +4,20 @@ package com.ellipticalcode.mc.rsvp.model;
  * Created by crono on 4/8/2017.
  */
 public class AreYouAttendingOption {
-    private boolean isAttending;
+    private String isAttending;
     private String answerText;
 
-    public AreYouAttendingOption(boolean isAttending, String answerText) {
+    public AreYouAttendingOption(String isAttending, String answerText) {
         this.isAttending = isAttending;
         this.answerText = answerText;
     }
 
-    public boolean getIsAttending() {
+    public String getIsAttending() {
         return isAttending;
     }
 
-    public void setAttending(boolean attending) {
-        isAttending = attending;
+    public void setIsAttending(String isAttending) {
+        this.isAttending = isAttending;
     }
 
     public String getAnswerText() {

@@ -189,14 +189,44 @@
             <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
           </div>
         </div>
+
+<!--        <div class="row row-bottom-padded-md">
+          <div class="offset-md-2 col-md-8">
+            <div class="row">
+              <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
+                <img style="max-width: 100%; max-height: 100%" src="https://unsplash.it/600.jpg?image=251" class="img-fluid">
+              </a>
+              <a href="https://unsplash.it/1200/768.jpg?image=252" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
+                <img style="max-width: 100%; max-height: 100%" src="https://unsplash.it/600.jpg?image=252" class="img-fluid">
+              </a>
+              <a href="https://unsplash.it/1200/768.jpg?image=253" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
+                <img style="max-width: 100%; max-height: 100%" src="https://unsplash.it/600.jpg?image=253" class="img-fluid">
+              </a>
+            </div>
+            <div class="row">
+              <a href="https://unsplash.it/1200/768.jpg?image=254" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
+                <img style="max-width: 100%; max-height: 100%" src="https://unsplash.it/600.jpg?image=254" class="img-fluid">
+              </a>
+              <a href="https://unsplash.it/1200/768.jpg?image=255" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
+                <img style="max-width: 100%; max-height: 100%" src="https://unsplash.it/600.jpg?image=255" class="img-fluid">
+              </a>
+              <a href="https://unsplash.it/1200/768.jpg?image=256" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
+                <img style="max-width: 100%; max-height: 100%" src="https://unsplash.it/600.jpg?image=256" class="img-fluid">
+              </a>
+            </div>
+          </div>
+        </div>-->
+
         <div class="row row-bottom-padded-md">
           <div class="col-md-12">
             <ul id="fh5co-gallery-list">
 
-              <li class="one-third animate-box" data-animate-effect="fadeIn" style="background-image: url(static/images/gallery-1.jpg); ">
-                <a href="images/gallery-1.jpg">
+              <li class="one-third animate-box" data-animate-effect="fadeIn" style="background-image: url(https://unsplash.it/600.jpg?image=251); ">
+                <a href="https://unsplash.it/1200/768.jpg?image=251" data-toggle="lightbox" data-gallery="example-gallery" class="color-2">
+                  <!--<img style="max-width: 100%; max-height: 100%" src="https://unsplash.it/600.jpg?image=251" class="img-fluid">-->
                   <div class="case-studies-summary">
-                    <span>14 Photos</span>
+                    <!--<span>14 Photos</span>-->
+
                     <h2>Two Glas of Juice</h2>
                   </div>
                 </a>
@@ -273,6 +303,8 @@
             </ul>
           </div>
         </div>
+
+
       </div>
     </div>
 
@@ -384,57 +416,100 @@
     </div>-->
 
 
-    <div th:if="${showRsvp != null and rsvpOptions != null and rsvpForm != null}" id="fh5co-started" class="fh5co-bg" style="background-image:url(static/images/img_bg_4.jpg);">
-      <div class="overlay"></div>
+    <!--<div th:if="${showRsvp != null}" id="fh5co-started" class="fh5co-bg" style="background-image:url(static/images/img_bg_4.jpg);">-->
+    <div th:if="${showRsvp != null}" id="fh5co-started" class="fh5co-bg" style="background-image:url(static/images/img_bg_4.jpg);">
+      <div class="overlay" style="background-color: #9a9a9a !important"></div>
       <div class="container">
         <div class="row">
           <div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
-            <h2>Are You Attending?</h2>
+            <h2 id="are-you-attending">Are You Attending?</h2>
             <p>Please Fill-up the form to notify you that you're attending. Thanks.</p>
           </div>
         </div>
+
         <div class="row">
+
           <div class="col-md-12">
-            <form id="rsvp-form" class="form-inline" th:object="${rsvpForm}">
+            <form id="rsvp-form" class="form-inline" method="post" th:action="@{/rsvp}" th:object="${rsvpForm}">
 
               <div class="col-md-12">
-                <div class="col-md-6 col-md-offset-3 text-center">
-                  <select id="select-is-attending" onchange="onIsAttendingSelectChange(this)"  class="form-control"\>
-                    <option selected disabled>Are You Attending?</option>
-                    <option style="background-color: #828282" th:each="areYouAttendingOption : ${rsvpOptions.areYouAttendingOptions}" th:value="${areYouAttendingOption.isAttending}" th:text="${areYouAttendingOption.answerText}">Wireframe</option>
+                <div class="col-md-6 col-md-offset-3">
+                  <input type="hidden" th:value="${rsvpForm.isAttending == null or rsvpForm.isAttending == ''}"/>
+                  <select id="select-is-attending" th:field="*{isAttending}" onchange="onIsAttendingSelectChange(this)" class="form-control" required\>
+                    <option
+                        th:style="${areYouAttendingOption.isAttending.length() == 0 ? 'background-color: white; color: white' : 'background-color: #828282; color: white'}"
+                        th:each="areYouAttendingOption : ${rsvpOptions.areYouAttendingOptions}"
+                        th:value="${areYouAttendingOption.isAttending}"
+                        th:text="${areYouAttendingOption.answerText}"
+                        th:selected="${areYouAttendingOption.isAttending == rsvpForm.isAttending}"
+                        th:disabled="${areYouAttendingOption.isAttending.length() == 0}">Wireframe</option>
                   </select>
                 </div>
               </div>
 
-              <div class="col-md-3 col-sm-4">
-                <div class="form-group">
-                  <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Full Name">
-                  <label for="name" class="sr-only">Full Name</label>
-                  <div th:errors="*{name}" class="red-text">Error</div>
-                </div>
-              </div>
-              <div class="col-md-3 col-sm-4">
-                <div class="form-group">
-                  <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Email">
-                  <label for="email" class="sr-only">Email</label>
-                  <div th:errors="*{email}" class="red-text">Error</div>
-                </div>
-              </div>
+              <div id="rsvp-form-options" style="display:none; margin-top: 40px" class="col-md-12">
 
-              <div class="col-md-3">
-                  <select th:field="*{totalInvitedGuests}" class="form-control"\>
-                    <option style="background-color: #828282" th:each="totalInvited : ${rsvpOptions.totalInvitedGuestsOptions}" th:value="${totalInvited.totalInvited}" th:text="${totalInvited.totalInvitedText}">Wireframe</option>
+                <!--NAME-->
+                <div id="name-container" class="col-md-6 col-md-offset-3">
+                  <div class="form-group">
+                    <input
+                        id="name"
+                        type="text"
+                        th:field="*{name}"
+                        class="form-control"
+                        th:style="${#fields.hasErrors('name') ? 'border: solid thin red !important;' : ''}"
+                        placeholder="Full Name"/>
+                    <label for="name" class="sr-only">Full Name</label>
+                    <div th:errors="*{name}" style="color:red">Error</div>
+                  </div>
+                </div>
+
+                <!-- EMAIL -->
+                <div id="email-container" class="col-md-6 col-md-offset-3">
+                  <div class="form-group">
+                    <input
+                        id="email"
+                        type="email"
+                        th:field="*{email}"
+                        class="form-control"
+                        th:style="${#fields.hasErrors('email') ? 'border: solid thin red !important;' : ''}"
+                        placeholder="Email"/>
+                    <label for="email" class="sr-only">Email</label>
+                    <div th:errors="*{email}" style="color:red">Error</div>
+                  </div>
+                </div>
+
+                <!-- TOTAL INVITED -->
+                <div id="total-invited-container" class="col-md-6 col-md-offset-3">
+                  <select
+                      id="select-total-invited"
+                      th:field="*{totalInvitedGuests}"
+                      onchange="onTotalInvitedSelectChange($(this))"
+                      class="form-control"
+                      th:style="${#fields.hasErrors('totalInvitedGuests') ? 'border: solid thin red !important;' : ''}"\>
+
+                    <option
+                        th:each="totalInvitedOption : ${rsvpOptions.totalInvitedGuestsOptions}"
+                        th:style="${totalInvitedOption.totalInvited.length() == 0 ? 'background-color: white; color: white' : 'background-color: #828282; color: white'}"
+                        th:value="${totalInvitedOption.totalInvited}"
+                        th:text="${totalInvitedOption.totalInvitedText}"
+                        th:selected="${totalInvitedOption.totalInvited == rsvpForm.totalInvitedGuests}"
+                        th:disabled="${totalInvitedOption.totalInvited.length() == 0}">Wireframe</option>
                   </select>
+                  <div th:errors="*{totalInvitedGuests}" style="color:red;">Error</div>
+                </div>
+
+                <div class="col-md-4 col-md-offset-4 text-center" style="margin-top: 20px">
+                  <button id="submit-button" class="btn btn-default btn-block">I am Attending</button>
+                </div>
               </div>
 
-              <div class="col-md-3 col-sm-4">
-                <button type="submit" class="btn btn-default btn-block">I am Attending</button>
-              </div>
             </form>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 
   <script type="text/javascript" layout:fragment="script">
@@ -458,12 +533,49 @@
 
     //Rsvp
     if($('#display-rsvp').length) {
-      $('body').scrollTop($('#fh5co-started').offset().top);
+      /*$('body').scrollTop($('#fh5co-started').offset().top);*/
+      $('body').scrollTop($('#are-you-attending').offset().top);
     }
+
+    var prevSelectedValue = $( '#select-total-invited option:selected' ).val();
 
     function onIsAttendingSelectChange() {
+        var selected = $( '#select-is-attending option:selected' ).val();
 
+        if(selected != '') {
+
+          $('#rsvp-form-options').show();
+
+          if(selected == 'Yes') {
+            $('#name-container').show();
+            $('#email-container').show();
+            $('#total-invited-container').show();
+
+            if(prevSelectedValue == null) {
+                $( '#select-total-invited').val('');
+            } else {
+                $( '#select-total-invited').val(prevSelectedValue);
+            }
+            $('#submit-button').text('I AM ATTENDING');
+          } else if(selected == 'No') {
+              $('#name-container').show();
+              $('#email-container').show();
+              $('#total-invited-container').hide();
+              $( '#select-total-invited').val('0');
+              $('#submit-button').text('I AM NOT ATTENDING');
+          }
+
+        }
+
+        prevSelectedValue = null;
     }
+
+    onIsAttendingSelectChange();
+
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+    });
 
   </script>
 
