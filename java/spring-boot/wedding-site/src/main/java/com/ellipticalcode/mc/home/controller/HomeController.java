@@ -1,6 +1,9 @@
 package com.ellipticalcode.mc.home.controller;
 
+import com.ellipticalcode.mc.rsvp.model.RsvpForm;
+import com.ellipticalcode.mc.rsvp.model.RsvpOptions;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -10,7 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 
     @RequestMapping("/")
-    public String home() {
+    public String home(Model model) {
+
+        model.addAttribute("showGallergy", false);
+        model.addAttribute("rsvpOptions", new RsvpOptions());
+        model.addAttribute("rsvpForm", new RsvpForm());
+
         return "home/index";
     }
 

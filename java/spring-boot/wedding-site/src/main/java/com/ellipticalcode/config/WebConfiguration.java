@@ -1,10 +1,7 @@
 package com.ellipticalcode.config;
 
-import com.ellipticalcode.data.entity.user.User;
-import com.ellipticalcode.shared.impl.AuditorAwareImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -35,8 +32,4 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
         return localeChangeInterceptor;
     }
 
-    @Bean
-    public AuditorAware<User> auditorProvider() {
-        return new AuditorAwareImpl();
-    }
 }
