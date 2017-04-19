@@ -27,7 +27,7 @@ public class RsvpServiceImpl implements RsvpService {
 
             Rsvp rsvp = new Rsvp();
 
-            if(rsvpForm.getIsAttending() == "True") {
+            if(rsvpForm.getIsAttending().equals("Yes")) {
                 rsvp.setAttending(true);
             } else {
                 rsvp.setAttending(false);
