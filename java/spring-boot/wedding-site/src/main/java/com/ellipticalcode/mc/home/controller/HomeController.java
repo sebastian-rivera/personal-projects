@@ -22,4 +22,9 @@ public class HomeController {
         return "home/index";
     }
 
+    @RequestMapping("/pacman")
+    public String pacman() {
+        return "games/pacman";
+    }
+
 }

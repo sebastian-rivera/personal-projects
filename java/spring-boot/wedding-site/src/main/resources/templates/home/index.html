@@ -56,15 +56,24 @@
               <p>The Doctor</p>
             </div>
           </div>
-          <p class="heart text-center"><i class="icon-heart2"></i></p>
+
+          <!--<p class="heart text-center"><i class="icon-heart2"></i></p>-->
+          <div style="position: absolute; left: 50%;">
+            <div style="position: relative; left: -50%;" class="heart">
+              <i class="icon-heart2">
+            </div>
+          </div>
+
           <div class="couple-half">
             <div class="bride">
-              <img src="images/groom.jpg" alt="groom" class="img-responsive">
+              <!--<a onclick="onShowLoadPacman()" style="cursor: pointer;" data-toggle="modal" data-target="#pacmanModal">-->
+                <img src="images/groom.jpg" alt="groom" class="img-responsive">
+              <!--</a>-->
             </div>
             <div class="desc-bride">
               <h3>Sebastian Rivera</h3>
+              <p>The Computer <a onclick="onShowLoadPacman()" style="cursor: pointer; color: #828282 !important;" data-toggle="modal" data-target="#pacmanModal"><u>Nerd</u></a></p>
               <!--<p>The Groom</p>-->
-              <p>The Computer Nerd</p>
             </div>
           </div>
         </div>
@@ -230,8 +239,36 @@
 
           <div class="col-md-8 col-md-offset-2 animate-box">
             <div class="fh5co-video fh5co-bg" style="background-image: url(/images/save-the-date-bg.jpg); ">
+              <!--<a style="cursor: pointer" data-toggle="modal" data-target="#myModal" class="popup-vimeo"><i class="icon-video2"></i></a>-->
               <a style="cursor: pointer" data-toggle="modal" data-target="#myModal" class="popup-vimeo"><i class="icon-video2"></i></a>
               <div class="overlay"></div>
+            </div>
+          </div>
+
+
+
+          <!-- Modal -->
+          <div id="pacmanModal" class="modal modal-fullscreen fade" role="dialog" style="height: 100%">
+            <div class="modal-dialog" style="height: 100%">
+
+              <!-- Modal content-->
+              <div class="modal-content" style="height: 100%">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <!--<h4 class="modal-title">Congrats! You fo</h4>-->
+                </div>
+                <div class="modal-body" style="height: 100%">
+                  <div class="row" style="height: 100%">
+                    <div class="col-md-12" style="height: 100%">
+                      <iframe style="width: 100%; height: 100%" src="" id="pacmanSource"></iframe>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -644,6 +681,10 @@
         });*/
 
     });
+
+    function onShowLoadPacman() {
+        document.getElementById('pacmanSource').src = '/pacman';
+    }
 
     function onSaveTheDateMenuClick() {
         toggleMenu();
