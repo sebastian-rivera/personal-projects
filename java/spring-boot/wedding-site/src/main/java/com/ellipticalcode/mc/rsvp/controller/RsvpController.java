@@ -1,6 +1,7 @@
 package com.ellipticalcode.mc.rsvp.controller;
 
 import com.ellipticalcode.mc.rsvp.model.RsvpForm;
+import com.ellipticalcode.mc.rsvp.model.RsvpNotAttendingForm;
 import com.ellipticalcode.mc.rsvp.model.RsvpOptions;
 import com.ellipticalcode.mc.rsvp.service.RsvpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,23 +33,50 @@ public class RsvpController {
         model.addAttribute("showGallergy", false);
         model.addAttribute("showRsvp", true);
         model.addAttribute("rsvpOptions", new RsvpOptions());
+        model.addAttribute("isAttending", "");
         model.addAttribute("rsvpForm", new RsvpForm());
+        model.addAttribute("rsvpNotAttendingForm", new RsvpNotAttendingForm());
 
         return "home/index";
     }
 
-    @RequestMapping(value="/rsvp", method= RequestMethod.POST)
+    @RequestMapping(value="/rsvp-attending", method= RequestMethod.POST)
     public String postRsvp(@Valid RsvpForm rsvpForm, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 
         if(bindingResult.hasErrors()) {
             model.addAttribute("showGallergy", false);
             model.addAttribute("showRsvp", true);
             model.addAttribute("rsvpOptions", new RsvpOptions());
+            model.addAttribute("isAttending", "Yes");
             model.addAttribute("rsvpForm", rsvpForm);
+            model.addAttribute("rsvpNotAttendingForm", new RsvpNotAttendingForm());
+            model.addAttribute("showRsvpError", true);
             return "home/index";
         }
 
-        rsvpService.saveRsvp(rsvpForm);
+        rsvpService.saveAttendingRsvp(rsvpForm);
+
+        redirectAttributes.addFlashAttribute("rsvpSaved", "RSVP Information saved!");
+
+        return "redirect:/";
+
+    }
+
+    @RequestMapping(value="/rsvp-not-attending", method= RequestMethod.POST)
+    public String postRsvpNotAttending(@Valid RsvpNotAttendingForm rsvpNotAttendingForm, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+
+        if(bindingResult.hasErrors()) {
+            model.addAttribute("showGallergy", false);
+            model.addAttribute("showRsvp", true);
+            model.addAttribute("rsvpOptions", new RsvpOptions());
+            model.addAttribute("isAttending", "No");
+            model.addAttribute("rsvpForm", new RsvpForm());
+            model.addAttribute("rsvpNotAttendingForm", rsvpNotAttendingForm);
+            model.addAttribute("showRsvpError", true);
+            return "home/index";
+        }
+
+        rsvpService.saveNotAttendingRsvp(rsvpNotAttendingForm);
 
         redirectAttributes.addFlashAttribute("rsvpSaved", "RSVP Information saved!");
 

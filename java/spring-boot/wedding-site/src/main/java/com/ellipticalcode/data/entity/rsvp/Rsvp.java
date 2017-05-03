@@ -1,26 +1,26 @@
 package com.ellipticalcode.data.entity.rsvp;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.List;
 
 /**
  * Created by crono on 4/16/2017.
  */
-@Document(collection = "rsvp")
+@Document(collection = "RsvpList")
 public class Rsvp {
 
     @Id
     private String id;
 
-    private boolean isAttending;
+    private Boolean isAttending;
 
-    private int totalInvitedGuests;
+    private Boolean isAttendingCeremony;
 
-    private String name;
+    private Integer totalInvitedGuests;
 
-    @Indexed(unique = true)
-    private String email;
+    private List<Guest> guests;
 
     public String getId() {
         return id;
@@ -30,35 +30,35 @@ public class Rsvp {
         this.id = id;
     }
 
-    public boolean isAttending() {
+    public Boolean getAttending() {
         return isAttending;
     }
 
-    public void setAttending(boolean attending) {
+    public void setAttending(Boolean attending) {
         isAttending = attending;
     }
 
-    public int getTotalInvitedGuests() {
+    public Boolean getAttendingCeremony() {
+        return isAttendingCeremony;
+    }
+
+    public void setAttendingCeremony(Boolean attendingCeremony) {
+        isAttendingCeremony = attendingCeremony;
+    }
+
+    public Integer getTotalInvitedGuests() {
         return totalInvitedGuests;
     }
 
-    public void setTotalInvitedGuests(int totalInvitedGuests) {
+    public void setTotalInvitedGuests(Integer totalInvitedGuests) {
         this.totalInvitedGuests = totalInvitedGuests;
     }
 
-    public String getName() {
-        return name;
+    public List<Guest> getGuests() {
+        return guests;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setGuests(List<Guest> guests) {
+        this.guests = guests;
     }
 }

@@ -1,6 +1,7 @@
 package com.ellipticalcode.mc.home.controller;
 
 import com.ellipticalcode.mc.rsvp.model.RsvpForm;
+import com.ellipticalcode.mc.rsvp.model.RsvpNotAttendingForm;
 import com.ellipticalcode.mc.rsvp.model.RsvpOptions;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +17,12 @@ public class HomeController {
     public String home(Model model) {
 
         model.addAttribute("showGallergy", false);
-        model.addAttribute("rsvpOptions", new RsvpOptions());
-        model.addAttribute("rsvpForm", new RsvpForm());
 
+        model.addAttribute("rsvpOptions", new RsvpOptions());
+        model.addAttribute("isAttending", "");
+        model.addAttribute("rsvpForm", new RsvpForm());
+        model.addAttribute("rsvpNotAttendingForm", new RsvpNotAttendingForm());
+        
         return "home/index";
     }
 

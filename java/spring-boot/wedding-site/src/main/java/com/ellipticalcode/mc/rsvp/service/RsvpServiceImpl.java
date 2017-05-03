@@ -1,10 +1,14 @@
 package com.ellipticalcode.mc.rsvp.service;
 
+import com.ellipticalcode.data.entity.rsvp.Guest;
 import com.ellipticalcode.data.entity.rsvp.Rsvp;
 import com.ellipticalcode.data.repository.RsvpRepository;
 import com.ellipticalcode.mc.rsvp.model.RsvpForm;
+import com.ellipticalcode.mc.rsvp.model.RsvpNotAttendingForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 
 /**
  * Created by crono on 4/16/2017.
@@ -19,44 +23,35 @@ public class RsvpServiceImpl implements RsvpService {
         this.rsvpRepository = rsvpRepository;
     }
 
-    public void saveRsvp(RsvpForm rsvpForm) {
+    @Override
+    public void saveAttendingRsvp(RsvpForm rsvpForm) {
+        Rsvp rsvp = new Rsvp();
 
-        Rsvp existing = rsvpRepository.findByEmail(rsvpForm.getEmail());
+        rsvp.setAttending(true);
 
-        if(existing == null) {
+        rsvp.setAttendingCeremony(rsvpForm.getIsAttendingCeremony().equals("Yes"));
 
-            Rsvp rsvp = new Rsvp();
+        rsvp.setTotalInvitedGuests(Integer.parseInt(rsvpForm.getTotalInvitedGuests()));
 
-            if(rsvpForm.getIsAttending().equals("Yes")) {
-                rsvp.setAttending(true);
-            } else {
-                rsvp.setAttending(false);
-            }
+        rsvp.setGuests(new ArrayList<>());
 
-            rsvp.setTotalInvitedGuests(Integer.parseInt(rsvpForm.getTotalInvitedGuests()));
+        rsvpForm.getRsvpGuests().forEach(g -> rsvp.getGuests().add(new Guest(g.getFirstName(), g.getLastName(), g.getDinnerChoice())));
 
-            rsvp.setName(rsvpForm.getName());
+        rsvpRepository.save(rsvp);
 
-            rsvp.setEmail(rsvpForm.getEmail());
+    }
 
-            rsvpRepository.save(rsvp);
+    @Override
+    public void saveNotAttendingRsvp(RsvpNotAttendingForm rsvpNotAttendingForm) {
+        Rsvp rsvp = new Rsvp();
 
-        } else {
+        rsvp.setAttending(false);
 
-            if(rsvpForm.getIsAttending().equals("Yes")) {
-                existing.setAttending(true);
-            } else {
-                existing.setAttending(false);
-            }
+        rsvp.setGuests(new ArrayList<>());
 
-            existing.setTotalInvitedGuests(Integer.parseInt(rsvpForm.getTotalInvitedGuests()));
+        rsvp.getGuests().add(new Guest(rsvpNotAttendingForm.getFirstName(), rsvpNotAttendingForm.getLastName(), null));
 
-            existing.setName(rsvpForm.getName());
-
-            rsvpRepository.save(existing);
-
-        }
-
+        rsvpRepository.save(rsvp);
     }
 
 }

@@ -9,7 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface RsvpRepository extends MongoRepository<Rsvp, String> {
-
-    Rsvp findByEmail(String email);
-
 }
