@@ -5,14 +5,20 @@ import com.ellipticalcode.mc.rsvp.model.RsvpNotAttendingForm;
 import com.ellipticalcode.mc.rsvp.model.RsvpOptions;
 import com.ellipticalcode.mc.rsvp.service.RsvpService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 
 /**
  * Created by crono on 4/8/2017.
@@ -82,6 +88,21 @@ public class RsvpController {
 
         return "redirect:/";
 
+    }
+
+    @ResponseBody
+    @RequestMapping("/download")
+    public Resource exportToExcel(HttpServletResponse response) throws IOException {
+
+        Resource resource = rsvpService.exportRsvpListToExcel();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(new MediaType("application", "vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+        headers.setContentLength(resource.contentLength());
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + "InviteList.xlsx" + "\"");
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+
+        return resource;
     }
 
 }
